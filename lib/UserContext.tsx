@@ -12,7 +12,7 @@ type User = {
 type UserContextType = {
     user: User | null;
     setUser: (user: User | null) => void;
-    loading: boolean;
+    userLoading: boolean;
     refreshUser: () => Promise<void>;
 };
 
@@ -20,7 +20,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [userLoading, setUserLoading] = useState(true);
     const initialNavigationDone = useRef(false);
 
     const fetchUser = async (userId: string): Promise<User | null> => {
@@ -57,7 +57,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
                 if (error) {
                     console.error("Session error:", error.message);
-                    setLoading(false);
+                    setUserLoading(false);
                     return;
                 }
 
@@ -79,7 +79,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
             } catch (err) {
                 console.error("Init error:", err);
             } finally {
-                setLoading(false);
+                setUserLoading(false);
             }
         };
 
@@ -116,7 +116,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     }, []);
 
     return (
-        <UserContext.Provider value={{ user, setUser, loading, refreshUser }}>
+        <UserContext.Provider value={{ user, setUser, userLoading, refreshUser }}>
             {children}
         </UserContext.Provider>
     );

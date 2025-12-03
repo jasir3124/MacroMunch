@@ -4,7 +4,7 @@ import React from 'react'
 export default function SavedMeals() {
     return (
         <View>
-            <Text>SavedMeals</Text>
+
         </View>
     )
 }

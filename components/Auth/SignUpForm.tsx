@@ -55,8 +55,6 @@ export default function SignUpForm() {
                 body: { email: data.email }
             });
 
-            console.log(existingUser);
-            console.log(existingUserError);
 
             if (existingUser) {
                 if(existingUser.confirmed == false) {
@@ -203,9 +201,9 @@ export default function SignUpForm() {
             <TouchableOpacity
                 onPress={handleSubmit(onSubmit)}
                 disabled={isSubmitting}
-                className="bg-tealAccent py-3 rounded-lg items-center w-1/3 self-center"
+                className="bg-tealAccent py-3 rounded-lg items-center w-full self-center"
             >
-                <Text className="text-white font-semibold">{isSubmitting ? "Signing up..." : "Sign Up"}</Text>
+                <Text className="text-white font-semibold text-lg">{isSubmitting ? "Signing up..." : "Sign Up"}</Text>
             </TouchableOpacity>
 
             <Modal visible={modalVisible} transparent animationType="fade">

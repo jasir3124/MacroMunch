@@ -5,55 +5,49 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import GeneratedMeals from "../../components/Main/GeneratedMeals"
 import SavedMeals from "../../components/Main/SavedMeals"
 
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-
 import {useUser} from "@/lib/UserContext";
+import { supabase } from "@/lib/supabase";
 
 export default function Home() {
-    const {user, loading} = useUser();
+    const {user, userLoading} = useUser();
     const [Page, setPage] = useState("generatedMeals");
+
+    if (userLoading) {
+        return (
+            <View className="flex-1 items-center justify-center">
+                <ActivityIndicator size="large" color="#000" />
+            </View>
+        );
+    }
 
     const isFree = user?.tier === "free";
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: "#fff"}} className="flex-1 bg-white">
-            <View className="flex-row justify-evenly items-center px-4 py-4">
-                <TouchableOpacity className="bg-gray-100 px-4 py-2 rounded-lg">
-                    <Text className="text-2xl font-semibold">Generated Meals</Text>
-                </TouchableOpacity>
+            {!isFree ? (
+                <View className="flex-row justify-evenly items-center px-4 py-4">
+                    <TouchableOpacity className="bg-gray-100 px-4 py-2 rounded-lg" onPress={() => setPage("generatedMeals")}>
+                        <Text className="text-2xl font-semibold">Todays Meals</Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity
-                    disabled={isFree}
-                    className={`px-4 py-2 rounded-lg relative ${
-                        isFree ? "bg-gray-200 opacity-60" : "bg-gray-100"
-                    }`}
-                    onPress={() => {
-                        if (!isFree) {
-                            console.log("Navigating to saved meals...");
-                            // router.push("/(main)/savedMeals") for example
-                        }
-                    }}
-                >
-                    <Text
-                        className={`text-2xl font-semibold ${
-                            isFree ? "text-gray-400" : "text-black"
-                        }`}
+                    <TouchableOpacity
+                        disabled={isFree}
+                        className={`px-4 py-2 rounded-lg relative bg-gray-100`}
+                        onPress={() => {setPage("savedMeals")}}
                     >
-                        Saved Meals
-                    </Text>
-                    {isFree && (
-                        <View
-                            className="absolute -top-3 -right-3"
-                            style={{ transform: [{ rotate: '20deg' }] }}
+                        <Text
+                            className={`text-2xl font-semibold text-black`}
                         >
-                            <FontAwesome6 name="crown" size={23} color="#ca8a04" />
-                        </View>
-                    )}
-                </TouchableOpacity>
-            </View>
+                            Saved Meals
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            ) : (
+                <Text className="text-4xl font-semibold self-center mt-4">Todays Meals</Text>
+            )}
 
             <View className="flex-1 px-10">
-                {Page === "generatedMeals" && <GeneratedMeals />}
-                {Page === "savedMeals" && <SavedMeals />}
+                {Page === "generatedMeals" && <GeneratedMeals/>}
+                {Page === "savedMeals" && <SavedMeals/>}
             </View>
         </SafeAreaView>
     );

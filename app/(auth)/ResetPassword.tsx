@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import {
     View,
     Text,
@@ -6,9 +6,10 @@ import {
     TouchableOpacity,
     ActivityIndicator,
 } from "react-native";
-import { supabase } from "../../lib/supabase";
-import { router } from "expo-router";
+import {supabase} from "../../lib/supabase";
+import {router} from "expo-router";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ResetPassword() {
     const [password, setPassword] = useState("");
@@ -38,7 +39,7 @@ export default function ResetPassword() {
         setMessage(null);
 
         // Update the password
-        const { error } = await supabase.auth.updateUser({
+        const {error} = await supabase.auth.updateUser({
             password: password,
         });
 
@@ -46,10 +47,6 @@ export default function ResetPassword() {
             setMessage(error.message);
             setLoading(false);
         } else {
-            // Password updated successfully
-            // At this point, Supabase automatically marks the email as verified
-            // when they used the reset link
-
             setMessage("Password updated successfully! Redirecting...");
 
             setTimeout(() => {
@@ -61,77 +58,83 @@ export default function ResetPassword() {
     };
 
     return (
-        <View className="flex-1 bg-white px-6 justify-center">
-            <Text className="text-3xl font-bold text-greenSoft mb-4 text-center">
-                Reset Password
+        <SafeAreaView className="flex-1 bg-white">
+            <Text className="text-4xl font-semibold text-blueGray self-center mt-7">
+                MacroMunch
             </Text>
-            <Text className="text-gray-600 text-center mb-8">
-                Enter your new password below.
-            </Text>
+            <View className="px-6 flex-1 justify-center">
+                <Text className="text-3xl font-bold text-greenSoft mb-4 text-center">
+                    Reset Password
+                </Text>
+                <Text className="text-gray-600 text-center mb-8">
+                    Enter your new password below.
+                </Text>
 
-            <View className="mb-4">
-                <View className="flex-row items-center border border-gray-300 rounded-xl px-4 py-3">
-                    <TextInput
-                        placeholder="New password"
-                        placeholderTextColor="#9ca3af"
-                        value={password}
-                        onChangeText={setPassword}
-                        secureTextEntry={!showPassword}
-                        className="flex-1 text-base text-black"
-                    />
-                    <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                        <MaterialIcons
-                            name={showPassword ? "visibility" : "visibility-off"}
-                            size={24}
-                            color="#9ca3af"
+                <View className="mb-4">
+                    <View className="flex-row items-center border border-gray-300 rounded-xl px-4 py-3">
+                        <TextInput
+                            placeholder="New password"
+                            placeholderTextColor="#9ca3af"
+                            value={password}
+                            onChangeText={setPassword}
+                            secureTextEntry={!showPassword}
+                            className="flex-1 text-base text-black"
                         />
-                    </TouchableOpacity>
+                        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                            <MaterialIcons
+                                name={showPassword ? "visibility" : "visibility-off"}
+                                size={24}
+                                color="#9ca3af"
+                            />
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </View>
 
-            <View className="mb-6">
-                <View className="flex-row items-center border border-gray-300 rounded-xl px-4 py-3">
-                    <TextInput
-                        placeholder="Confirm new password"
-                        placeholderTextColor="#9ca3af"
-                        value={confirmPassword}
-                        onChangeText={setConfirmPassword}
-                        secureTextEntry={!showConfirmPassword}
-                        className="flex-1 text-base text-black"
-                    />
-                    <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
-                        <MaterialIcons
-                            name={showConfirmPassword ? "visibility" : "visibility-off"}
-                            size={24}
-                            color="#9ca3af"
+                <View className="mb-6">
+                    <View className="flex-row items-center border border-gray-300 rounded-xl px-4 py-3">
+                        <TextInput
+                            placeholder="Confirm new password"
+                            placeholderTextColor="#9ca3af"
+                            value={confirmPassword}
+                            onChangeText={setConfirmPassword}
+                            secureTextEntry={!showConfirmPassword}
+                            className="flex-1 text-base text-black"
                         />
-                    </TouchableOpacity>
+                        <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
+                            <MaterialIcons
+                                name={showConfirmPassword ? "visibility" : "visibility-off"}
+                                size={24}
+                                color="#9ca3af"
+                            />
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </View>
 
-            <TouchableOpacity
-                disabled={loading}
-                onPress={handleUpdatePassword}
-                className={`w-full py-3 rounded-xl ${
-                    loading ? "bg-gray-400" : "bg-greenSoft"
-                } items-center`}
-            >
-                {loading ? (
-                    <ActivityIndicator color="white" />
-                ) : (
-                    <Text className="text-white font-semibold text-lg">
-                        Update Password
+                <TouchableOpacity
+                    disabled={loading}
+                    onPress={handleUpdatePassword}
+                    className={`w-full py-3 rounded-xl ${
+                        loading ? "bg-gray-400" : "bg-greenSoft"
+                    } items-center`}
+                >
+                    {loading ? (
+                        <ActivityIndicator color="white"/>
+                    ) : (
+                        <Text className="text-white font-semibold text-lg">
+                            Update Password
+                        </Text>
+                    )}
+                </TouchableOpacity>
+
+                {message && (
+                    <Text className={`text-center mt-4 ${
+                        message.includes("successfully") ? "text-green-600" : "text-red-500"
+                    }`}>
+                        {message}
                     </Text>
                 )}
-            </TouchableOpacity>
+            </View>
 
-            {message && (
-                <Text className={`text-center mt-4 ${
-                    message.includes("successfully") ? "text-green-600" : "text-red-500"
-                }`}>
-                    {message}
-                </Text>
-            )}
-        </View>
+        </SafeAreaView>
     );
 }

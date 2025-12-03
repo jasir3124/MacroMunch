@@ -8,8 +8,10 @@ import {
     Modal,
 } from "react-native";
 import { supabase } from "../../lib/supabase";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router } from "expo-router";
+
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 export default function ForgotPassword() {
     const [email, setEmail] = useState("");
@@ -47,16 +49,21 @@ export default function ForgotPassword() {
     };
 
     return (
-        <View className="flex-1 bg-white px-6">
-            <TouchableOpacity
-                onPress={() => router.replace("/(auth)/SignIn")}
-                className="mt-7 relative -left-5 self-start p-2 rounded-full"
-            >
-                <MaterialIcons name="keyboard-arrow-left" size={55} color="black"/>
-            </TouchableOpacity>
+        <View className="flex-1 bg-white px-12">
+            <View className="flex-row mt-9 items-center">
+                <TouchableOpacity
+                    onPress={() => router.replace("/(auth)/SignIn")}
+                    className="relative -left-8"
+                >
+                    <MaterialIcons name="keyboard-arrow-left" size={55} color="black"/>
+                </TouchableOpacity>
+                <Text className="text-4xl font-semibold text-blueGray ms-5">
+                    MacroMunch
+                </Text>
+            </View>
 
             <View className="flex-1 items-center justify-center">
-                <Text className="text-3xl font-bold text-greenSoft mb-4">
+                <Text className="text-4xl font-bold text-greenSoft mb-4">
                     Forgot Password
                 </Text>
                 <Text className="text-gray-600 text-center mb-8">
@@ -70,7 +77,7 @@ export default function ForgotPassword() {
                     onChangeText={setEmail}
                     autoCapitalize="none"
                     keyboardType="email-address"
-                    className="w-full border border-gray-300 rounded-xl px-4 py-3 text-base text-black mb-4"
+                    className="w-full border border-gray-300 rounded-xl px-5 py-4 text-base text-black mb-7"
                 />
 
                 <TouchableOpacity
@@ -92,6 +99,14 @@ export default function ForgotPassword() {
                 {message && (
                     <Text className="text-center mt-4 text-red-500">{message}</Text>
                 )}
+
+                <TouchableOpacity
+                    onPress={() => router.replace("/(auth)/SignIn")}
+                    className="mt-7 p-2 rounded-full flex-row items-center self-center"
+                >
+                    <AntDesign name="arrow-left" size={19} color="black" />
+                    <Text className="ms-3">Back to login</Text>
+                </TouchableOpacity>
             </View>
 
             <Modal

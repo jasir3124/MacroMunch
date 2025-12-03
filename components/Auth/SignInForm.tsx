@@ -175,7 +175,7 @@ export default function SignInForm() {
             <TouchableOpacity
                 onPress={handleSubmit(onSubmit)}
                 disabled={isSubmitting}
-                className="bg-tealAccent py-3 rounded-lg items-center w-1/3 self-center"
+                className="bg-tealAccent py-3 rounded-lg items-center w-full self-center"
             >
                 {isSubmitting ? (
                     <ActivityIndicator color="white"/>
@@ -189,7 +189,7 @@ export default function SignInForm() {
                 className="mt-4 self-center"
                 onPress={() => router.push("/(auth)/ForgotPassword")}
             >
-                <Text className="text-blue-500">Forgot Password?</Text>
+                <Text className="text-blueGray font-semibold">Forgot your password?</Text>
             </TouchableOpacity>
 
             <Modal visible={modalVisible} transparent animationType="fade">
