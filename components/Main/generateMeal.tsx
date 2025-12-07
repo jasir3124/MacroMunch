@@ -33,28 +33,16 @@ export default function GenerateMeal({onClose}) {
     const isFormValid = mealDescription.trim().length > 0;
 
     return (
-        <View style={{flex: 1}}>
+        <View className="flex-1">
             {/* Handle bar */}
-            <View style={{alignItems: 'center', marginBottom: 10}}>
-                <View style={{
-                    width: 40,
-                    height: 5,
-                    backgroundColor: '#569099',
-                    borderRadius: 3,
-                    opacity: 0.3
-                }}/>
+            <View className="items-center mb-2.5">
+                <View className="w-10 h-1.5 bg-blueGray rounded opacity-30" />
             </View>
 
             {/* Close button */}
             <TouchableOpacity
                 onPress={onClose}
-                style={{
-                    position: 'absolute',
-                    right: 0,
-                    top: 0,
-                    padding: 10,
-                    zIndex: 1
-                }}
+                className="absolute right-0 top-0 p-2.5 z-10"
             >
                 <Ionicons name="close" size={28} color="#569099"/>
             </TouchableOpacity>
@@ -62,38 +50,20 @@ export default function GenerateMeal({onClose}) {
             {/* Content */}
             <ScrollView
                 showsVerticalScrollIndicator={false}
-                style={{flex: 1}}
-                contentContainerStyle={{paddingBottom: 100}}
-                nestedScrollEnabled={true}
+                className="flex-1"
             >
                 <View>
-                    <Text style={{
-                        fontSize: 24,
-                        fontWeight: 'bold',
-                        marginBottom: 8,
-                        marginTop: 10,
-                        color: '#569099'
-                    }}>
+                    <Text className="text-2xl font-bold mb-2 mt-2.5">
                         Generate Meal
                     </Text>
 
-                    <Text style={{
-                        fontSize: 14,
-                        color: '#569099',
-                        opacity: 0.7,
-                        marginBottom: 24
-                    }}>
+                    <Text className="text-sm opacity-70 mb-6">
                         Describe what you'd like to eat and we'll create a meal plan for you
                     </Text>
 
                     {/* Meal Description */}
-                    <View style={{marginBottom: 24}}>
-                        <Text style={{
-                            fontSize: 16,
-                            fontWeight: '600',
-                            marginBottom: 8,
-                            color: '#569099'
-                        }}>
+                    <View className="mb-6">
+                        <Text className="text-base font-semibold mb-2 text-blueGray">
                             What would you like to eat?
                         </Text>
                         <TextInput
@@ -104,53 +74,20 @@ export default function GenerateMeal({onClose}) {
                             multiline
                             numberOfLines={4}
                             textAlignVertical="top"
-                            style={{
-                                borderWidth: 2,
-                                borderColor: '#a4dad2',
-                                borderRadius: 12,
-                                padding: 12,
-                                fontSize: 15,
-                                color: '#569099',
-                                backgroundColor: '#a4dad220',
-                                minHeight: 100
-                            }}
+                            className="border-2 border-tealAccent rounded-xl p-3 text-[15px] text-blueGray bg-tealAccent/[0.13] min-h-[100px]"
                         />
-                        <Text style={{
-                            fontSize: 12,
-                            color: '#569099',
-                            opacity: 0.6,
-                            marginTop: 6
-                        }}>
+                        <Text className="text-xs text-blueGray opacity-60 mt-1.5">
                             Be as specific or general as you'd like
                         </Text>
                     </View>
 
                     {/* Custom Macros Toggle */}
-                    <View style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        marginBottom: 16,
-                        padding: 16,
-                        backgroundColor: '#bce08a30',
-                        borderRadius: 12,
-                        borderWidth: 1,
-                        borderColor: '#bce08a'
-                    }}>
-                        <View style={{flex: 1, marginRight: 12}}>
-                            <Text style={{
-                                fontSize: 16,
-                                fontWeight: '600',
-                                color: '#569099',
-                                marginBottom: 4
-                            }}>
+                    <View className="flex-row justify-between items-center mb-4 p-4 bg-limeSoft/[0.19] rounded-xl border border-limeSoft">
+                        <View className="flex-1 mr-3">
+                            <Text className="text-base font-semibold text-blueGray mb-1">
                                 Custom Macros
                             </Text>
-                            <Text style={{
-                                fontSize: 13,
-                                color: '#569099',
-                                opacity: 0.7
-                            }}>
+                            <Text className="text-[13px] text-blueGray opacity-70">
                                 Specify target macros for this meal
                             </Text>
                         </View>
@@ -164,33 +101,16 @@ export default function GenerateMeal({onClose}) {
 
                     {/* Macro Inputs */}
                     {includeCustomMacros && (
-                        <View style={{
-                            backgroundColor: '#a4dad220',
-                            padding: 16,
-                            borderRadius: 12,
-                            marginBottom: 24,
-                            borderWidth: 1,
-                            borderColor: '#a4dad2'
-                        }}>
-                            <Text style={{
-                                fontSize: 15,
-                                fontWeight: '600',
-                                color: '#569099',
-                                marginBottom: 12
-                            }}>
+                        <View className="bg-tealAccent/[0.13] p-4 rounded-xl mb-6 border border-tealAccent">
+                            <Text className="text-[15px] font-semibold text-blueGray mb-3">
                                 Target Macros (optional)
                             </Text>
 
-                            <View style={{gap: 12}}>
+                            <View className="gap-3">
                                 {/* Protein & Carbs */}
-                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                    <View style={{flex: 1}}>
-                                        <Text style={{
-                                            fontSize: 14,
-                                            color: '#569099',
-                                            marginBottom: 6,
-                                            opacity: 0.8
-                                        }}>
+                                <View className="flex-row items-center">
+                                    <View className="flex-1">
+                                        <Text className="text-sm text-blueGray mb-1.5 opacity-80">
                                             Protein (g)
                                         </Text>
                                         <TextInput
@@ -199,25 +119,12 @@ export default function GenerateMeal({onClose}) {
                                             placeholder="30"
                                             placeholderTextColor="#56909950"
                                             keyboardType="numeric"
-                                            style={{
-                                                borderWidth: 1.5,
-                                                borderColor: '#93c572',
-                                                borderRadius: 8,
-                                                padding: 10,
-                                                fontSize: 15,
-                                                backgroundColor: '#ffffff',
-                                                color: '#569099'
-                                            }}
+                                            className="border-[1.5px] border-greenSoft rounded-lg p-2.5 text-[15px] bg-white text-blueGray"
                                         />
                                     </View>
-                                    <View style={{width: 12}}/>
-                                    <View style={{flex: 1}}>
-                                        <Text style={{
-                                            fontSize: 14,
-                                            color: '#569099',
-                                            marginBottom: 6,
-                                            opacity: 0.8
-                                        }}>
+                                    <View className="w-3" />
+                                    <View className="flex-1">
+                                        <Text className="text-sm text-blueGray mb-1.5 opacity-80">
                                             Carbs (g)
                                         </Text>
                                         <TextInput
@@ -226,28 +133,15 @@ export default function GenerateMeal({onClose}) {
                                             placeholder="50"
                                             placeholderTextColor="#56909950"
                                             keyboardType="numeric"
-                                            style={{
-                                                borderWidth: 1.5,
-                                                borderColor: '#93c572',
-                                                borderRadius: 8,
-                                                padding: 10,
-                                                fontSize: 15,
-                                                backgroundColor: '#ffffff',
-                                                color: '#569099'
-                                            }}
+                                            className="border-[1.5px] border-greenSoft rounded-lg p-2.5 text-[15px] bg-white text-blueGray"
                                         />
                                     </View>
                                 </View>
 
                                 {/* Fats & Calories */}
-                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                    <View style={{flex: 1}}>
-                                        <Text style={{
-                                            fontSize: 14,
-                                            color: '#569099',
-                                            marginBottom: 6,
-                                            opacity: 0.8
-                                        }}>
+                                <View className="flex-row items-center">
+                                    <View className="flex-1">
+                                        <Text className="text-sm text-blueGray mb-1.5 opacity-80">
                                             Fats (g)
                                         </Text>
                                         <TextInput
@@ -256,25 +150,12 @@ export default function GenerateMeal({onClose}) {
                                             placeholder="15"
                                             placeholderTextColor="#56909950"
                                             keyboardType="numeric"
-                                            style={{
-                                                borderWidth: 1.5,
-                                                borderColor: '#93c572',
-                                                borderRadius: 8,
-                                                padding: 10,
-                                                fontSize: 15,
-                                                backgroundColor: '#ffffff',
-                                                color: '#569099'
-                                            }}
+                                            className="border-[1.5px] border-greenSoft rounded-lg p-2.5 text-[15px] bg-white text-blueGray"
                                         />
                                     </View>
-                                    <View style={{width: 12}}/>
-                                    <View style={{flex: 1}}>
-                                        <Text style={{
-                                            fontSize: 14,
-                                            color: '#569099',
-                                            marginBottom: 6,
-                                            opacity: 0.8
-                                        }}>
+                                    <View className="w-3" />
+                                    <View className="flex-1">
+                                        <Text className="text-sm text-blueGray mb-1.5 opacity-80">
                                             Calories
                                         </Text>
                                         <TextInput
@@ -283,42 +164,24 @@ export default function GenerateMeal({onClose}) {
                                             placeholder="500"
                                             placeholderTextColor="#56909950"
                                             keyboardType="numeric"
-                                            style={{
-                                                borderWidth: 1.5,
-                                                borderColor: '#93c572',
-                                                borderRadius: 8,
-                                                padding: 10,
-                                                fontSize: 15,
-                                                backgroundColor: '#ffffff',
-                                                color: '#569099'
-                                            }}
+                                            className="border-[1.5px] border-greenSoft rounded-lg p-2.5 text-[15px] bg-white text-blueGray"
                                         />
                                     </View>
                                 </View>
                             </View>
 
-                            <Text style={{
-                                fontSize: 12,
-                                color: '#569099',
-                                opacity: 0.6,
-                                marginTop: 8
-                            }}>
+                            <Text className="text-xs text-blueGray opacity-60 mt-2">
                                 Leave empty to let AI decide the portions
                             </Text>
                         </View>
                     )}
 
                     {/* Quick Suggestions */}
-                    <View style={{marginBottom: 24}}>
-                        <Text style={{
-                            fontSize: 15,
-                            fontWeight: '600',
-                            color: '#569099',
-                            marginBottom: 10
-                        }}>
+                    <View className="mb-6">
+                        <Text className="text-[15px] font-semibold text-blueGray mb-2.5">
                             Quick Suggestions
                         </Text>
-                        <View style={{flexDirection: 'row', flexWrap: 'wrap', gap: 8}}>
+                        <View className="flex-row flex-wrap gap-2">
                             {['High Protein', 'Low Carb', 'Vegetarian', 'Quick & Easy'].map((suggestion) => {
                                 const isSelected = quickSuggestions.includes(suggestion);
                                 return (
@@ -331,20 +194,15 @@ export default function GenerateMeal({onClose}) {
                                                 setQuickSuggestions(prev => [...prev, suggestion]);
                                             }
                                         }}
-                                        style={{
-                                            paddingHorizontal: 14,
-                                            paddingVertical: 8,
-                                            backgroundColor: isSelected ? '#f6d809' : '#f6d80930',
-                                            borderWidth: 1.5,
-                                            borderColor: isSelected ? '#f6d809' : '#f6d80980',
-                                            borderRadius: 20
-                                        }}
+                                        className={`px-3.5 py-2 border-[1.5px] rounded-full ${
+                                            isSelected
+                                                ? 'bg-yellowAccent border-yellowAccent'
+                                                : 'bg-yellowAccent/[0.19] border-yellowAccent/50'
+                                        }`}
                                     >
-                                        <Text style={{
-                                            fontSize: 13,
-                                            color: '#569099',
-                                            fontWeight: isSelected ? '600' : '500'
-                                        }}>
+                                        <Text className={`text-[13px] text-blueGray ${
+                                            isSelected ? 'font-semibold' : 'font-medium'
+                                        }`}>
                                             {suggestion}
                                         </Text>
                                     </TouchableOpacity>
@@ -355,51 +213,29 @@ export default function GenerateMeal({onClose}) {
                 </View>
             </ScrollView>
 
-            {/* Generate Button - Compact */}
-            <View style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                paddingHorizontal: 16,
-                paddingVertical: 12,
-                borderTopWidth: 1,
-                borderTopColor: '#a4dad250',
-                backgroundColor: '#ffffff'
-            }}>
+            <View className="bottom-0 left-0 right-0 px-4 py-3 border-t border-tealAccent/[0.31] bg-white">
                 <TouchableOpacity
                     onPress={handleGenerate}
                     disabled={!isFormValid || isGenerating}
-                    style={{
-                        backgroundColor: isFormValid && !isGenerating ? '#93c572' : '#56909940',
-                        paddingVertical: 14,
-                        borderRadius: 12,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'center',
+                    className={`py-3.5 rounded-xl flex-row items-center justify-center ${
+                        isFormValid && !isGenerating ? 'bg-greenSoft' : 'bg-blueGray/25'
+                    }`}
+                    style={isFormValid && !isGenerating ? {
                         shadowColor: '#93c572',
                         shadowOffset: {width: 0, height: 2},
                         shadowOpacity: 0.3,
                         shadowRadius: 4,
                         elevation: 3
-                    }}
+                    } : {}}
                 >
                     {isGenerating ? (
-                        <Text style={{
-                            color: '#ffffff',
-                            fontSize: 16,
-                            fontWeight: '600'
-                        }}>
+                        <Text className="text-white text-base font-semibold">
                             Generating...
                         </Text>
                     ) : (
                         <>
                             <Ionicons name="sparkles" size={18} color="#ffffff" style={{marginRight: 8}}/>
-                            <Text style={{
-                                color: '#ffffff',
-                                fontSize: 16,
-                                fontWeight: '600'
-                            }}>
+                            <Text className="text-white text-base font-semibold">
                                 Generate Meal
                             </Text>
                         </>

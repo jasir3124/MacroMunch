@@ -36,7 +36,6 @@ export default function MealsScreen() {
     }
 
 
-
     return (
         <View style={styles.container}>
             <FlatList
