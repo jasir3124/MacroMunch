@@ -4,9 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b6eda77-86dd-4071-92ac-34e048b4d0d6" name="Changes" comment="">
+    <list default="true" id="c6902eeb-3a60-42e8-a57a-be8cc3d705d6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/prettier.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Main/GeneratedMeals.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Main/GeneratedMeals.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/extensions.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(main)/_layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(main)/_layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Auth/SignInForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Auth/SignInForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/Main/generateMeal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Main/generateMeal.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -30,41 +36,30 @@
   }
 }</component>
   <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 1
 }</component>
-  <component name="ProjectId" id="32QF3RrlamvBKsxeFnddcRWXkAY" />
+  <component name="ProjectId" id="36YuBeZU16MDe1OJaUtoqjM9zfa" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/Admin/Documents/programming/projekete/projects/LiftEats/assets/images",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "C:\\Users\\Admin\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Admin/Documents/programming/projekete/projects/MacroMunch&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Admin\\Documents\\programming\\projekete\\projects\\MacroMunch\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Admin\Documents\programming\projekete\projects\LiftEats\assets\images" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Admin\Documents\programming\projekete\projects\MacroMunch\components\Main" />
-      <recent name="C:\Users\Admin\Documents\programming\projekete\projects\LiftEats\components\Main" />
-      <recent name="C:\Users\Admin\Documents\programming\projekete\projects\LiftEats\components\Auth" />
-      <recent name="C:\Users\Admin\Documents\programming\projekete\projects\LiftEats\app\(auth)" />
-    </key>
-  </component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -74,59 +69,14 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="9b6eda77-86dd-4071-92ac-34e048b4d0d6" name="Changes" comment="" />
-      <created>1757344689949</created>
+      <changelist id="c6902eeb-3a60-42e8-a57a-be8cc3d705d6" name="Changes" comment="" />
+      <created>1765195692377</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1757344689949</updated>
-      <workItem from="1757344691180" duration="1420000" />
-      <workItem from="1757754799657" duration="283000" />
-      <workItem from="1758451770487" duration="5131000" />
-      <workItem from="1758636190862" duration="2114000" />
-      <workItem from="1758990053850" duration="1549000" />
-      <workItem from="1759057291416" duration="1283000" />
-      <workItem from="1759406891771" duration="567000" />
-      <workItem from="1759413412486" duration="5267000" />
-      <workItem from="1759600241944" duration="847000" />
-      <workItem from="1759661537456" duration="8567000" />
-      <workItem from="1759845753546" duration="5143000" />
-      <workItem from="1760021683240" duration="5064000" />
-      <workItem from="1760182276798" duration="10202000" />
-      <workItem from="1760259030002" duration="738000" />
-      <workItem from="1760259787137" duration="3320000" />
-      <workItem from="1760279321907" duration="3611000" />
-      <workItem from="1760810750580" duration="618000" />
-      <workItem from="1760880135704" duration="3387000" />
-      <workItem from="1760883565684" duration="34000" />
-      <workItem from="1760883621671" duration="4415000" />
-      <workItem from="1761060709272" duration="1185000" />
-      <workItem from="1761164465605" duration="1160000" />
-      <workItem from="1761208487699" duration="3934000" />
-      <workItem from="1761213741194" duration="695000" />
-      <workItem from="1761225797533" duration="5232000" />
-      <workItem from="1761317372193" duration="3931000" />
-      <workItem from="1761332370196" duration="7000" />
-      <workItem from="1761389015514" duration="2081000" />
-      <workItem from="1761400570512" duration="1996000" />
-      <workItem from="1761415979534" duration="6000" />
-      <workItem from="1761485306443" duration="5339000" />
-      <workItem from="1761570312172" duration="2023000" />
-      <workItem from="1761665993094" duration="1712000" />
-      <workItem from="1762081248135" duration="8415000" />
-      <workItem from="1762697889549" duration="362000" />
-      <workItem from="1762698273094" duration="1516000" />
-      <workItem from="1762714594450" duration="518000" />
-      <workItem from="1762715232506" duration="2944000" />
-      <workItem from="1763063339242" duration="3391000" />
-      <workItem from="1763144004174" duration="2585000" />
-      <workItem from="1763203556181" duration="8000" />
-      <workItem from="1763567041248" duration="408000" />
-      <workItem from="1764178660633" duration="2244000" />
-      <workItem from="1764698874164" duration="1133000" />
-      <workItem from="1764700029129" duration="3534000" />
-      <workItem from="1764784359677" duration="9129000" />
-      <workItem from="1765124318424" duration="28000" />
-      <workItem from="1765128430105" duration="3583000" />
+      <updated>1765195692377</updated>
+      <workItem from="1765195701370" duration="4242000" />
+      <workItem from="1766062527447" duration="934000" />
+      <workItem from="1766779029919" duration="16000" />
     </task>
     <servers />
   </component>
@@ -134,36 +84,11 @@
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
-    <option name="OPEN_GENERIC_TABS">
-      <map>
-        <entry key="a67c454b-0230-4c3e-ae88-e0db798ef544" value="TOOL_WINDOW" />
-      </map>
-    </option>
     <option name="TAB_STATES">
       <map>
-        <entry key="a67c454b-0230-4c3e-ae88-e0db798ef544">
+        <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="HEAD" />
-                      </list>
-                    </value>
-                  </entry>
-                  <entry key="roots">
-                    <value>
-                      <list>
-                        <option value="$PROJECT_DIR$" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>

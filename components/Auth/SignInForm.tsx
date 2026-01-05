@@ -18,12 +18,9 @@ import {router} from "expo-router";
 
 // Validation schema
 const signInSchema = z.object({
-    email: z.string().email("Invalid email"),
-    password: z
-        .string()
-        .min(6, "Password must be at least 6 characters")
-        .max(30, "Password must be at most 30 characters"),
-});
+    email: z.string().nonempty("Email is required"),
+    password: z.string().nonempty("Password is required"),
+});z
 
 type SignInFormData = z.infer<typeof signInSchema>;
 

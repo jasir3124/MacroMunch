@@ -1,6 +1,7 @@
 import {View, Text, TouchableOpacity, ScrollView, TextInput, Switch} from 'react-native';
 import {Ionicons} from "@expo/vector-icons";
 import {useState} from 'react';
+import {supabase} from "../../lib/supabase";
 
 export default function GenerateMeal({onClose}) {
     const [mealDescription, setMealDescription] = useState<string>('');
@@ -23,23 +24,39 @@ export default function GenerateMeal({onClose}) {
         if (!mealDescription.trim()) return;
 
         setIsGenerating(true);
-        // Your generation logic here
-        setTimeout(() => {
-            setIsGenerating(false);
-            // Handle generated meal
-        }, 2000);
+
+        const session = await supabase.auth.getSession();
+        const userId = session.data.session?.user.id;
+
+        const supabaseAnonKey: string = process.env.EXPO_PUBLIC_SUPABASE_KEY
+
+        const res = await fetch(
+            "https://ibmutlcdehhlzxjnovna.supabase.co/functions/v1/gemini-food-generator",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${supabaseAnonKey}`,
+                },
+                body: JSON.stringify({
+                    prompt:[ mealDescription,
+                    includeCustomMacros,
+                    quickSuggestions,
+                    macros],
+                    userId
+                }),
+            }
+        );
+        const meal = await res.json();
+
+        setIsGenerating(false);
+        console.log(meal);
     };
 
     const isFormValid = mealDescription.trim().length > 0;
 
     return (
         <View className="flex-1">
-            {/* Handle bar */}
-            <View className="items-center mb-2.5">
-                <View className="w-10 h-1.5 bg-blueGray rounded opacity-30" />
-            </View>
-
-            {/* Close button */}
             <TouchableOpacity
                 onPress={onClose}
                 className="absolute right-0 top-0 p-2.5 z-10"
@@ -47,21 +64,19 @@ export default function GenerateMeal({onClose}) {
                 <Ionicons name="close" size={28} color="#569099"/>
             </TouchableOpacity>
 
-            {/* Content */}
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 className="flex-1"
             >
                 <View>
-                    <Text className="text-2xl font-bold mb-2 mt-2.5">
+                    <Text className="text-2xl font-bold mb-2 mt-2.5 text-blueGray">
                         Generate Meal
                     </Text>
 
                     <Text className="text-sm opacity-70 mb-6">
-                        Describe what you'd like to eat and we'll create a meal plan for you
+                        Describe what you&#39;d like to eat and we&#39;ll create a meal plan for you
                     </Text>
 
-                    {/* Meal Description */}
                     <View className="mb-6">
                         <Text className="text-base font-semibold mb-2 text-blueGray">
                             What would you like to eat?
@@ -76,12 +91,45 @@ export default function GenerateMeal({onClose}) {
                             textAlignVertical="top"
                             className="border-2 border-tealAccent rounded-xl p-3 text-[15px] text-blueGray bg-tealAccent/[0.13] min-h-[100px]"
                         />
-                        <Text className="text-xs text-blueGray opacity-60 mt-1.5">
-                            Be as specific or general as you'd like
+                        <Text className="text-xs text-blueGray opacity-60 mt-1.5">11
+                            Be as specific or general as you&#39;d like
                         </Text>
                     </View>
 
-                    {/* Custom Macros Toggle */}
+                    <View className="mb-6">
+                        <Text className="text-[15px] font-semibold text-blueGray mb-2.5">
+                            Quick Suggestions
+                        </Text>
+                        <View className="flex-row flex-wrap gap-2">
+                            {['High Protein', 'Low Carb', 'Vegetarian', 'Quick & Easy'].map((suggestion) => {
+                                const isSelected = quickSuggestions.includes(suggestion);
+                                return (
+                                    <TouchableOpacity
+                                        key={suggestion}
+                                        onPress={() => {
+                                            if (isSelected) {
+                                                setQuickSuggestions(prev => prev.filter(s => s !== suggestion));
+                                            } else {
+                                                setQuickSuggestions(prev => [...prev, suggestion]);
+                                            }
+                                        }}
+                                        className={`px-3.5 py-2 border-[1.5px] rounded-full ${
+                                            isSelected
+                                                ? 'bg-yellowAccent border-yellowAccent'
+                                                : 'bg-yellowAccent/[0.19] border-yellowAccent/50'
+                                        }`}
+                                    >
+                                        <Text className={`text-[13px] text-blueGray ${
+                                            isSelected ? 'font-semibold' : 'font-medium'
+                                        }`}>
+                                            {suggestion}
+                                        </Text>
+                                    </TouchableOpacity>
+                                );
+                            })}
+                        </View>
+                    </View>
+
                     <View className="flex-row justify-between items-center mb-4 p-4 bg-limeSoft/[0.19] rounded-xl border border-limeSoft">
                         <View className="flex-1 mr-3">
                             <Text className="text-base font-semibold text-blueGray mb-1">
@@ -99,7 +147,6 @@ export default function GenerateMeal({onClose}) {
                         />
                     </View>
 
-                    {/* Macro Inputs */}
                     {includeCustomMacros && (
                         <View className="bg-tealAccent/[0.13] p-4 rounded-xl mb-6 border border-tealAccent">
                             <Text className="text-[15px] font-semibold text-blueGray mb-3">
@@ -107,7 +154,6 @@ export default function GenerateMeal({onClose}) {
                             </Text>
 
                             <View className="gap-3">
-                                {/* Protein & Carbs */}
                                 <View className="flex-row items-center">
                                     <View className="flex-1">
                                         <Text className="text-sm text-blueGray mb-1.5 opacity-80">
@@ -138,7 +184,6 @@ export default function GenerateMeal({onClose}) {
                                     </View>
                                 </View>
 
-                                {/* Fats & Calories */}
                                 <View className="flex-row items-center">
                                     <View className="flex-1">
                                         <Text className="text-sm text-blueGray mb-1.5 opacity-80">
@@ -175,41 +220,6 @@ export default function GenerateMeal({onClose}) {
                             </Text>
                         </View>
                     )}
-
-                    {/* Quick Suggestions */}
-                    <View className="mb-6">
-                        <Text className="text-[15px] font-semibold text-blueGray mb-2.5">
-                            Quick Suggestions
-                        </Text>
-                        <View className="flex-row flex-wrap gap-2">
-                            {['High Protein', 'Low Carb', 'Vegetarian', 'Quick & Easy'].map((suggestion) => {
-                                const isSelected = quickSuggestions.includes(suggestion);
-                                return (
-                                    <TouchableOpacity
-                                        key={suggestion}
-                                        onPress={() => {
-                                            if (isSelected) {
-                                                setQuickSuggestions(prev => prev.filter(s => s !== suggestion));
-                                            } else {
-                                                setQuickSuggestions(prev => [...prev, suggestion]);
-                                            }
-                                        }}
-                                        className={`px-3.5 py-2 border-[1.5px] rounded-full ${
-                                            isSelected
-                                                ? 'bg-yellowAccent border-yellowAccent'
-                                                : 'bg-yellowAccent/[0.19] border-yellowAccent/50'
-                                        }`}
-                                    >
-                                        <Text className={`text-[13px] text-blueGray ${
-                                            isSelected ? 'font-semibold' : 'font-medium'
-                                        }`}>
-                                            {suggestion}
-                                        </Text>
-                                    </TouchableOpacity>
-                                );
-                            })}
-                        </View>
-                    </View>
                 </View>
             </ScrollView>
 
