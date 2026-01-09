@@ -25,10 +25,13 @@ export default function GenerateMeal({onClose}) {
 
         setIsGenerating(true);
 
-        const session = await supabase.auth.getSession();
-        const userId = session.data.session?.user.id;
+        // const session = await supabase.auth.getSession();
+        // const userId = session.data.session?.user.id;
 
-        const supabaseAnonKey: string = process.env.EXPO_PUBLIC_SUPABASE_KEY
+        const session = await supabase.auth.getSession();
+        const accessToken = session.data.session?.access_token;
+
+        // const supabaseAnonKey: string = process.env.EXPO_PUBLIC_SUPABASE_KEY
 
         const res = await fetch(
             "https://ibmutlcdehhlzxjnovna.supabase.co/functions/v1/gemini-food-generator",
@@ -36,14 +39,13 @@ export default function GenerateMeal({onClose}) {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${supabaseAnonKey}`,
+                    "Authorization": `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({
-                    prompt:[ mealDescription,
+                    prompt: mealDescription,
                     includeCustomMacros,
                     quickSuggestions,
-                    macros],
-                    userId
+                    macros
                 }),
             }
         );
