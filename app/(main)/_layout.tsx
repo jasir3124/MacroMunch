@@ -1,14 +1,32 @@
 import React, {useEffect, useState} from "react";
 import {TouchableOpacity, View, StyleSheet, Platform, StatusBar, Modal} from "react-native";
-import { Tabs } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
+import {Tabs} from "expo-router";
 import * as NavigationBar from 'expo-navigation-bar';
+
+import {Ionicons} from "@expo/vector-icons";
+
+import {useUsage} from "@/lib/PlanUsageContext";
+
 import GenerateMeal from "../../components/Main/generateMeal";
+import {AlertMealGeneration} from "@/components/Main/AlertMealGeneration";
 
 export default function MainLayout() {
+    const {generationLimit} = useUsage();
+
+    const [ShowGenerationMealAlert, setShowGenerationMealAlert] = useState(false);
+
+    useEffect(() => {
+        if (generationLimit.reached && !generationLimit.alertShown) {
+            setShowGenerationMealAlert(true);
+        }
+    }, [generationLimit.reached]);
+
+
     const insets = useSafeAreaInsets();
+
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [MealGenerationAlert, setMealGenerationAlert] = useState()
 
     useEffect(() => {
         if (Platform.OS === 'android') {
@@ -23,7 +41,7 @@ export default function MainLayout() {
                 barStyle="dark-content"
                 backgroundColor="#ffffff"
             />
-            <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
+            <View style={{flex: 1, backgroundColor: "#ffffff"}}>
                 <Tabs
                     screenOptions={{
                         headerShown: false,
@@ -47,8 +65,8 @@ export default function MainLayout() {
                         name="home"
                         options={{
                             title: "Home",
-                            tabBarIcon: ({ color, size }) => (
-                                <Ionicons name="home" color={color} size={size} />
+                            tabBarIcon: ({color, size}) => (
+                                <Ionicons name="home" color={color} size={size}/>
                             ),
                         }}
                     />
@@ -57,8 +75,8 @@ export default function MainLayout() {
                         name="profile"
                         options={{
                             title: "Profile",
-                            tabBarIcon: ({ color, size }) => (
-                                <Ionicons name="person" color={color} size={size} />
+                            tabBarIcon: ({color, size}) => (
+                                <Ionicons name="person" color={color} size={size}/>
                             ),
                         }}
                     />
@@ -76,9 +94,12 @@ export default function MainLayout() {
                         },
                     ]}
                 >
-                    <Ionicons name="add" size={50} color="white" />
+                    <Ionicons name="add" size={50} color="white"/>
                 </TouchableOpacity>
             </View>
+
+
+            <AlertMealGeneration visible={ShowGenerationMealAlert} onClose={() => setShowGenerationMealAlert(false)}/>
 
             <Modal
                 visible={isModalVisible}
@@ -93,8 +114,8 @@ export default function MainLayout() {
                         onPress={() => setIsModalVisible(false)}
                     />
 
-                    <View style={[styles.modalContent, { paddingBottom: insets.bottom }]}>
-                        <GenerateMeal onClose={() => setIsModalVisible(false)} />
+                    <View style={[styles.modalContent, {paddingBottom: insets.bottom}]}>
+                        <GenerateMeal onClose={() => setIsModalVisible(false)}/>
                     </View>
                 </View>
             </Modal>
@@ -114,7 +135,7 @@ const styles = StyleSheet.create({
         elevation: 10,
         shadowColor: "#000",
         shadowOpacity: 0.3,
-        shadowOffset: { width: 0, height: 3 },
+        shadowOffset: {width: 0, height: 3},
         shadowRadius: 4,
     },
     modalOverlay: {

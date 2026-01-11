@@ -1,9 +1,15 @@
 import {View, Text, TouchableOpacity, ScrollView, TextInput, Switch} from 'react-native';
-import {Ionicons} from "@expo/vector-icons";
 import {useState} from 'react';
+
 import {supabase} from "../../lib/supabase";
+import {useUsage} from "@/lib/PlanUsageContext";
+
+import {Ionicons} from "@expo/vector-icons";
+
 
 export default function GenerateMeal({onClose}) {
+    const { markGenerationLimitReached } = useUsage();
+
     const [mealDescription, setMealDescription] = useState<string>('');
     const [includeCustomMacros, setIncludeCustomMacros] = useState<boolean>(false);
     const [quickSuggestions, setQuickSuggestions] = useState<string[]>([]);
@@ -25,13 +31,8 @@ export default function GenerateMeal({onClose}) {
 
         setIsGenerating(true);
 
-        // const session = await supabase.auth.getSession();
-        // const userId = session.data.session?.user.id;
-
         const session = await supabase.auth.getSession();
         const accessToken = session.data.session?.access_token;
-
-        // const supabaseAnonKey: string = process.env.EXPO_PUBLIC_SUPABASE_KEY
 
         const res = await fetch(
             "https://ibmutlcdehhlzxjnovna.supabase.co/functions/v1/gemini-food-generator",
@@ -51,7 +52,11 @@ export default function GenerateMeal({onClose}) {
         );
         const meal = await res.json();
 
+        if (res.status === 403) {
+            markGenerationLimitReached();
+        }
         setIsGenerating(false);
+        onClose();
         console.log(meal);
     };
 

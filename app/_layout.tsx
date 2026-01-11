@@ -1,11 +1,14 @@
 // app/_layout.tsx
-import { useState, useEffect, useCallback } from "react";
-import { View } from "react-native";
+import {useState, useEffect, useCallback} from "react";
+import {View} from "react-native";
 import * as SplashScreen from "expo-splash-screen";
-import { Asset } from "expo-asset";
-import { Stack } from "expo-router";
-import { UserProvider } from "@/lib/UserContext";
-import { DeepLinkHandler } from "@/lib/DeepLinkHandler";
+import {Asset} from "expo-asset";
+import {Stack} from "expo-router";
+
+import {DeepLinkHandler} from "@/lib/DeepLinkHandler";
+import {UserProvider} from "@/lib/UserContext";
+import {UsageProvider} from "../lib/PlanUsageContext"
+
 import "../global.css";
 
 SplashScreen.preventAutoHideAsync();
@@ -41,10 +44,12 @@ export default function RootLayout() {
 
     return (
         <UserProvider>
-            <DeepLinkHandler />
-            <View style={{ flex: 1, backgroundColor: "#fff" }} onLayout={onLayoutRootView}>
-                <Stack screenOptions={{ headerShown: false }} />
-            </View>
+            <UsageProvider>
+                <DeepLinkHandler/>
+                <View style={{flex: 1, backgroundColor: "#fff"}} onLayout={onLayoutRootView}>
+                    <Stack screenOptions={{headerShown: false}}/>
+                </View>
+            </UsageProvider>
         </UserProvider>
     );
 }
