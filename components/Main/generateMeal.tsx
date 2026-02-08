@@ -1,14 +1,18 @@
+// noinspection D
+
 import {View, Text, TouchableOpacity, ScrollView, TextInput, Switch} from 'react-native';
 import {useState} from 'react';
 
-import {supabase} from "../../lib/supabase";
+import {supabase} from "@/lib/supabase";
 import {useUsage} from "@/lib/PlanUsageContext";
 
 import {Ionicons} from "@expo/vector-icons";
+import {useGeneratedMeals} from "@/lib/GeneratedMealsContext";
 
 
-export default function GenerateMeal({onClose}) {
+export default function GenerateMeal({onClose}: { onClose: () => void; }) {
     const { markGenerationLimitReached } = useUsage();
+    const { fetchMeals, isMealGeneratingFunc } = useGeneratedMeals()
 
     const [mealDescription, setMealDescription] = useState<string>('');
     const [includeCustomMacros, setIncludeCustomMacros] = useState<boolean>(false);
@@ -30,6 +34,7 @@ export default function GenerateMeal({onClose}) {
         if (!mealDescription.trim()) return;
 
         setIsGenerating(true);
+        isMealGeneratingFunc(true)
 
         const session = await supabase.auth.getSession();
         const accessToken = session.data.session?.access_token;
@@ -53,11 +58,14 @@ export default function GenerateMeal({onClose}) {
         const meal = await res.json();
 
         if (res.status === 403) {
-            markGenerationLimitReached();
+            await markGenerationLimitReached();
         }
+
+        fetchMeals()
+
         setIsGenerating(false);
+        isMealGeneratingFunc(false)
         onClose();
-        console.log(meal);
     };
 
     const isFormValid = mealDescription.trim().length > 0;

@@ -1,7 +1,9 @@
 // lib/UserContext.tsx
-import { createContext, useContext, useState, useEffect, ReactNode, useRef } from "react";
-import { supabase } from "@/lib/supabase";
-import { router } from "expo-router";
+// noinspection D
+
+import {createContext, useContext, useState, useEffect, ReactNode, useRef} from "react";
+import {supabase} from "@/lib/supabase";
+import {router} from "expo-router";
 
 type User = {
     id: string;
@@ -18,14 +20,14 @@ type UserContextType = {
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
-export const UserProvider = ({ children }: { children: ReactNode }) => {
+export const UserProvider = ({children}: { children: ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
     const [userLoading, setUserLoading] = useState(true);
     const initialNavigationDone = useRef(false);
 
     const fetchUser = async (userId: string): Promise<User | null> => {
         try {
-            const { data, error } = await supabase
+            const {data, error} = await supabase
                 .from("users")
                 .select("*")
                 .eq("id", userId)
@@ -35,6 +37,23 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
                 console.error("Error fetching user:", error.message);
                 return null;
             }
+
+            const {
+                data: userPlan,
+                error: planError
+            } = await supabase
+                .from("subscriptions")
+                .select("plan_id, status, expires_at")
+                .eq("user_id", userId)
+                .single();
+
+            if (planError) {
+                console.error("Error fetching user plan:", planError.message);
+                return null;
+            }
+
+            data.planTier = userPlan;
+
             return data;
         } catch (err) {
             console.error("Unexpected error fetching user:", err);
@@ -43,7 +62,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const refreshUser = async () => {
-        const { data: { session } } = await supabase.auth.getSession();
+        const {data: {session}} = await supabase.auth.getSession();
         if (session?.user) {
             const userData = await fetchUser(session.user.id);
             setUser(userData);
@@ -53,7 +72,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         const init = async () => {
             try {
-                const { data: { session }, error } = await supabase.auth.getSession();
+                const {data: {session}, error} = await supabase.auth.getSession();
 
                 if (error) {
                     console.error("Session error:", error.message);
@@ -61,20 +80,19 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
                     return;
                 }
 
-                if (session?.user) {
-                    const userData = await fetchUser(session.user.id);
-                    setUser(userData);
-
-                    // Only navigate on initial load, not on subsequent auth changes
-                    if (!initialNavigationDone.current && userData) {
-                        initialNavigationDone.current = true;
-                        router.replace("/(main)/home");
-                    }
-                } else {
-                    // No session, stay on auth screen
+                if(!session?.user){
                     if (!initialNavigationDone.current) {
                         initialNavigationDone.current = true;
                     }
+                }
+
+                // @ts-ignore
+                const userData = await fetchUser(session.user.id);
+                setUser(userData);
+
+                if (!initialNavigationDone.current && userData) {
+                    initialNavigationDone.current = true;
+                    router.replace("/(main)/home");
                 }
             } catch (err) {
                 console.error("Init error:", err);
@@ -86,7 +104,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         init();
 
         // Listen for auth state changes
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(
+        const {data: {subscription}} = supabase.auth.onAuthStateChange(
             async (event, session) => {
                 console.log("Auth event:", event);
 
@@ -116,7 +134,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     }, []);
 
     return (
-        <UserContext.Provider value={{ user, setUser, userLoading, refreshUser }}>
+        <UserContext.Provider value={{user, setUser, userLoading, refreshUser}}>
             {children}
         </UserContext.Provider>
     );

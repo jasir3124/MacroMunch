@@ -1,3 +1,5 @@
+// noinspection D
+
 import React, {useState} from "react";
 import {View, Text, TextInput, TouchableOpacity, Modal, ActivityIndicator} from "react-native";
 import {useForm, Controller} from "react-hook-form";
@@ -42,22 +44,14 @@ export default function SignUpForm() {
 
     const onSubmit = async (data: SignUpFormData) => {
         setFormError(null);
+
         try {
-
-            // const { data: existingUser } = await supabase
-            //     .from("users")
-            //     .select("*")
-            //     .eq("email", data.email)
-            //     .maybeSingle();
-            //
-
             const { data: existingUser, error: existingUserError } = await supabase.functions.invoke('check-email-exists', {
                 body: { email: data.email }
             });
 
-
-            if (existingUser) {
-                if(existingUser.confirmed == false) {
+            if (existingUser?.exists) {
+                if (!existingUser.confirmed) {
                     setEmailForResend(data.email);
                     await supabase.auth.resend({
                         type: "signup",
@@ -65,6 +59,7 @@ export default function SignUpForm() {
                         options: {emailRedirectTo: "macromunch://layout"},
                     });
                     setModalVisible(true);
+                    return;
                 }
                 setFormError("This email is already registered. Please log in instead.");
                 return;
@@ -77,6 +72,7 @@ export default function SignUpForm() {
             });
 
             if (error) {
+                console.log(error)
                 setFormError(error.message);
                 return;
             }
@@ -87,8 +83,10 @@ export default function SignUpForm() {
             console.log("Signed up successfully!");
         } catch (err: unknown) {
             if (err instanceof Error) {
+                console.log(err)
                 setFormError(err.message);
             } else if (typeof err === "string") {
+                console.log(err)
                 setFormError(err);
             } else {
                 setFormError("An unexpected error occurred");
@@ -211,7 +209,7 @@ export default function SignUpForm() {
                     <View className="bg-white p-6 rounded-xl w-full max-w-xs">
                         <Text className="text-lg font-bold mb-4 text-center">Confirm Your Email</Text>
                         <Text className="text-center text-gray-700 mb-6">
-                            A confirmation email has been sent to {emailForResend}.{"\n"}Please check your inbox and
+                            A confirmation link has been sent to {emailForResend}.{"\n"}Please check your inbox and
                             click the link to verify your account.
                         </Text>
 
@@ -223,7 +221,7 @@ export default function SignUpForm() {
                             {resending ? (
                                 <ActivityIndicator color="#555"/>
                             ) : (
-                                <Text className="text-center text-gray-900 font-medium">Resend Confirmation Email</Text>
+                                <Text className="text-center text-gray-900 font-medium">Resend Confirmation Link</Text>
                             )}
                         </TouchableOpacity>
 

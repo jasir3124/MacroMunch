@@ -8,4 +8,3 @@ export default function SavedMeals() {
         </View>
     )
 }
-const styles = StyleSheet.create({})

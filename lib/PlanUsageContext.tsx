@@ -1,3 +1,5 @@
+// noinspection D
+
 import React, {
     createContext,
     useContext,
@@ -17,6 +19,7 @@ type GenerationLimitState = {
 type UsageContextType = {
     generationLimit: GenerationLimitState;
     markGenerationLimitReached: () => Promise<void>;
+    alertShownToUser: () => Promise<void>;
     clearGenerationLimit: () => Promise<void>;
     refreshGenerationLimit: () => Promise<void>;
 };
@@ -42,6 +45,7 @@ export const UsageProvider = ({ children }: { children: ReactNode }) => {
         try {
             const raw = await AsyncStorage.getItem(STORAGE_KEY);
             if (!raw) {
+                console.log("No generation limit found in AsyncStorage");
                 setGenerationLimit({ reached: false, alertShown: false, date: null });
                 return;
             }
@@ -49,6 +53,7 @@ export const UsageProvider = ({ children }: { children: ReactNode }) => {
             const parsed: GenerationLimitState = JSON.parse(raw);
 
             if (parsed.date !== today()) {
+                console.log("Generation limit date does not match today's date");
                 await AsyncStorage.removeItem(STORAGE_KEY);
                 setGenerationLimit({ reached: false, alertShown: false, date: null });
                 return;
@@ -61,15 +66,29 @@ export const UsageProvider = ({ children }: { children: ReactNode }) => {
     };
 
     /**
-     * Mark limit reached (called when API returns 429 / 403)
+     *  Mark limit reached (called when API returns 429 / 403)
      */
     const markGenerationLimitReached = async () => {
         const value: GenerationLimitState = {
             reached: true,
-            alertShown: false,
+            alertShown: generationLimit.alertShown,
             date: today(),
         };
 
+        await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+        setGenerationLimit(value);
+    };
+
+
+    /**
+     * set alert shown to user to not show it again
+     */
+    const alertShownToUser = async () => {
+        const value: GenerationLimitState = {
+            reached: generationLimit.reached,
+            alertShown: true,
+            date: generationLimit.date,
+        };
         await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(value));
         setGenerationLimit(value);
     };
@@ -81,12 +100,15 @@ export const UsageProvider = ({ children }: { children: ReactNode }) => {
         await AsyncStorage.removeItem(STORAGE_KEY);
         setGenerationLimit({ reached: false, alertShown: false, date: null });
     };
+    // clearGenerationLimit();
 
     /**
      * Initial load
      */
     useEffect(() => {
+        console.log("refreshGenerationLimit");
         refreshGenerationLimit();
+        console.log(generationLimit);
     }, []);
 
     /**
@@ -101,6 +123,7 @@ export const UsageProvider = ({ children }: { children: ReactNode }) => {
 
         return () => sub.remove();
     }, []);
+
 
     /**
      * Safety net: auto-clear after midnight if app stays open
@@ -122,6 +145,7 @@ export const UsageProvider = ({ children }: { children: ReactNode }) => {
             value={{
         generationLimit,
             markGenerationLimitReached,
+                alertShownToUser,
             clearGenerationLimit,
             refreshGenerationLimit,
     }}

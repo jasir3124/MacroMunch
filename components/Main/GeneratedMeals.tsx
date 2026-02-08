@@ -1,60 +1,54 @@
-import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native';
-import React, { useState, useEffect, useCallback } from 'react';
-import { supabase } from '@/lib/supabase';
-import GeneratedMeals from './GeneratedMeals';
+import {View, FlatList, ActivityIndicator, Image, Text} from 'react-native';
+import React, {useContext } from 'react';
+
+import {GeneratedMealsContext} from "@/lib/GeneratedMealsContext";
+import GeneratedMealCard from "@/components/Main/GeneratedMealCard";
+
+import NoMealsImage from "../../assets/images/20260205_1556_Image Generation_remix_01kgq4re83e0nth033g767rgq1.png"
+import LeafImage from "../../assets/images/leaf.png"
 
 export default function MealsScreen() {
-    const [userMealsData, setUserMealsData] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const { generatedMeals, didFetchMeals } =  useContext(GeneratedMealsContext)
 
-    const fetchMeals = useCallback(async () => {
-        setLoading(true);
-        const { data, error } = await supabase
-            .from('generated_meals')
-            .select('id, meal_name')
-            .order('created_at', { ascending: false });
-
-        if (!error && data) {
-            // @ts-ignore
-            setUserMealsData(data);
-        }
-        setLoading(false);
-    }, []);
-
-    useEffect(() => {
-        fetchMeals();
-    }, [])
-
-    console.log(userMealsData);
-
-    if (loading) {
+    if (!didFetchMeals) {
         return (
-            <View style={styles.container}>
+            <View className={"flex-1 pt-10"}>
                 <ActivityIndicator size="large" />
             </View>
         );
     }
 
-
     return (
-        <View style={styles.container}>
+        <View className={"flex-1 pt-5 "}>
             <FlatList
-                data={userMealsData}
-                // @ts-ignore
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (
-                    // @ts-ignore
-                    <Text>{item.meal_name}</Text>
+                showsVerticalScrollIndicator={false}
+                data={generatedMeals}
+                contentContainerStyle={{ flexGrow: 1 }}
+                keyExtractor={(recipe) => recipe.id.toString()}
+                renderItem={({ item: recipe }) => (
+                    <GeneratedMealCard recipeData={recipe} />
                 )}
-                ListEmptyComponent={<Text>No meals found</Text>}
+                ListEmptyComponent={(
+                    <View className={"flex-1 h-full justify-center align-center"}>
+                        <Image
+                            source={NoMealsImage}
+                            style={{
+                                width: 300,
+                                height: 230,
+                                resizeMode: "cover",
+                                alignSelf: "center",
+                            }}
+                        />
+                        <Text className={"font-bold text-5xl capitalize text-[#655555] text-center mt-5"}>
+                            no meals yet
+                        </Text>
+                        <Text className={"text-xl capitalize text-[#655555] text-center mt-4"}>
+                            You have not generated any meals yet.
+                        </Text>
+                        <Image source={LeafImage} style={{width: 150, height: 40, alignSelf: "center"}} className={"mt-7"} />
+                    </View>
+                )}
             />
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 16,
-    },
-});

@@ -8,8 +8,10 @@ import {Stack} from "expo-router";
 import {DeepLinkHandler} from "@/lib/DeepLinkHandler";
 import {UserProvider} from "@/lib/UserContext";
 import {UsageProvider} from "../lib/PlanUsageContext"
+import {GeneratedMealsProvider} from "@/lib/GeneratedMealsContext";
 
 import "../global.css";
+import {supabase} from "@/lib/supabase";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -45,10 +47,12 @@ export default function RootLayout() {
     return (
         <UserProvider>
             <UsageProvider>
-                <DeepLinkHandler/>
-                <View style={{flex: 1, backgroundColor: "#fff"}} onLayout={onLayoutRootView}>
-                    <Stack screenOptions={{headerShown: false}}/>
-                </View>
+                <GeneratedMealsProvider>
+                    <DeepLinkHandler/>
+                    <View style={{flex: 1, backgroundColor: "#fff"}} onLayout={onLayoutRootView}>
+                        <Stack screenOptions={{headerShown: false}}/>
+                    </View>
+                </GeneratedMealsProvider>
             </UsageProvider>
         </UserProvider>
     );

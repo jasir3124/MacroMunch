@@ -1,3 +1,5 @@
+// noinspection D
+
 import React, {useEffect, useState} from "react";
 import {TouchableOpacity, View, StyleSheet, Platform, StatusBar, Modal} from "react-native";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
@@ -10,23 +12,36 @@ import {useUsage} from "@/lib/PlanUsageContext";
 
 import GenerateMeal from "../../components/Main/generateMeal";
 import {AlertMealGeneration} from "@/components/Main/AlertMealGeneration";
+import {useGeneratedMeals} from "@/lib/GeneratedMealsContext";
+import {AlertIsGeneratingMeal} from "@/components/Main/AlertIsGeneratingMeal";
 
 export default function MainLayout() {
-    const {generationLimit} = useUsage();
+    const insets = useSafeAreaInsets();
 
+    const {generationLimit, alertShownToUser} = useUsage();
+    const {generatingMeal} = useGeneratedMeals()
+
+    // generate meal modal
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+
+    // alert that meal generation limit reached
     const [ShowGenerationMealAlert, setShowGenerationMealAlert] = useState(false);
-
     useEffect(() => {
         if (generationLimit.reached && !generationLimit.alertShown) {
             setShowGenerationMealAlert(true);
+            alertShownToUser();
         }
-    }, [generationLimit.reached]);
+    }, [generationLimit.reached && !generationLimit.alertShown]);
 
 
-    const insets = useSafeAreaInsets();
-
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [MealGenerationAlert, setMealGenerationAlert] = useState()
+    // alert that meal is generating
+    const [ShowGeneratingMealAlert, setShowGeneratingMealAlert] = useState(false);
+    useEffect(() => {
+        console.log("ran useEffect")
+        console.log(generatingMeal, isModalVisible)
+        setShowGeneratingMealAlert(generatingMeal && !isModalVisible)
+    }, [generatingMeal || isModalVisible]);
 
     useEffect(() => {
         if (Platform.OS === 'android') {
@@ -42,65 +57,78 @@ export default function MainLayout() {
                 backgroundColor="#ffffff"
             />
             <View style={{flex: 1, backgroundColor: "#ffffff"}}>
-                <Tabs
-                    screenOptions={{
-                        headerShown: false,
-                        tabBarActiveTintColor: "#10b981",
-                        tabBarInactiveTintColor: "#6b7280",
-                        tabBarStyle: {
-                            backgroundColor: "#fff",
-                            borderTopWidth: 1,
-                            borderTopColor: "#e5e7eb",
-                            height: 60 + insets.bottom,
-                            paddingBottom: insets.bottom + 8,
-                            paddingTop: 8,
-                        },
-                        tabBarLabelStyle: {
-                            fontSize: 12,
-                            fontWeight: "600",
-                        },
-                    }}
-                >
-                    <Tabs.Screen
-                        name="home"
-                        options={{
-                            title: "Home",
-                            tabBarIcon: ({color, size}) => (
-                                <Ionicons name="home" color={color} size={size}/>
-                            ),
+                    <Tabs
+                        screenOptions={{
+                            headerShown: false,
+                            tabBarActiveTintColor: "#93c572",
+                            tabBarInactiveTintColor: "#6b7280",
+                            tabBarStyle: {
+                                backgroundColor: "#fff",
+                                borderTopWidth: 0,
+                                elevation: 0,
+                                shadowColor: "transparent",
+                                height: 60 + insets.bottom,
+                                paddingBottom: insets.bottom + 8,
+                                paddingTop: 8,
+                            },
+                            tabBarLabelStyle: {
+                                fontSize: 12,
+                                fontWeight: "600",
+                            },
                         }}
-                    />
+                    >
+                        <Tabs.Screen
+                            name="home"
+                            options={{
+                                title: "Home",
+                                tabBarItemStyle: {
+                                    marginRight: 30,
+                                },
+                                tabBarIcon: ({color, size}) => (
+                                    <Ionicons name="home" color={color} size={size}/>
+                                ),
+                            }}
+                        />
 
-                    <Tabs.Screen
-                        name="profile"
-                        options={{
-                            title: "Profile",
-                            tabBarIcon: ({color, size}) => (
-                                <Ionicons name="person" color={color} size={size}/>
-                            ),
-                        }}
-                    />
-                </Tabs>
-
-                {/* Floating Plus Button */}
-                <TouchableOpacity
-                    onPress={() => setIsModalVisible(true)}
-                    style={[
-                        styles.middleButton,
-                        {
-                            bottom: 60 + insets.bottom - 50,
-                            left: "50%",
-                            marginLeft: -50
-                        },
-                    ]}
-                >
-                    <Ionicons name="add" size={50} color="white"/>
-                </TouchableOpacity>
+                        <Tabs.Screen
+                            name="profile"
+                            options={{
+                                tabBarItemStyle: {
+                                    marginLeft: 30,
+                                },
+                                title: "Profile",
+                                tabBarIcon: ({color, size}) => (
+                                    <Ionicons name="person" color={color} size={size}/>
+                                ),
+                            }}
+                        />
+                    </Tabs>
             </View>
 
+            <TouchableOpacity
+                onPress={() => {
+                    generationLimit.reached ? setShowGenerationMealAlert(true) : setIsModalVisible(true)
+                }}
+                className={generationLimit.reached ? "bg-[#CFE3C2]" : "bg-greenSoft"}
+                style={[
+                    styles.middleButton,
+                    {
+                        bottom: 60 + insets.bottom - 50,
+                        left: "50%",
+                        marginLeft: -50
+                    },
+                ]}
+            >
+                <Ionicons name="add" size={50} color="white"/>
+            </TouchableOpacity>
 
+            {/*alert that meal generation limit reached*/}
             <AlertMealGeneration visible={ShowGenerationMealAlert} onClose={() => setShowGenerationMealAlert(false)}/>
 
+            {/*alert meal is generating*/}
+            <AlertIsGeneratingMeal visible={ShowGeneratingMealAlert} onClose={() => setShowGeneratingMealAlert(false)}/>
+
+            {/*generate meal modal*/}
             <Modal
                 visible={isModalVisible}
                 animationType="slide"
@@ -128,7 +156,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#10b981",
         width: 100,
         height: 100,
         borderRadius: 50,
@@ -153,4 +180,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 20,
         padding: 20,
     },
+    tabBarShadow: {
+
+    }
 });
