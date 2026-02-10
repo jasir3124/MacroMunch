@@ -75,7 +75,7 @@ export function AlertIsGeneratingMeal({ visible, onClose }) {
 
     return (
         <Modal visible={ModalVisible} transparent onRequestClose={onClose}>
-            <View className="flex-1 bg-black/20">
+            {/*<View className="flex-1 bg-black/20">*/}
                 <Animated.View
                     style={{
                         transform: [{ translateY }],
@@ -150,7 +150,7 @@ export function AlertIsGeneratingMeal({ visible, onClose }) {
                         </View>
                     </View>
                 </Animated.View>
-            </View>
+            {/*</View>*/}
         </Modal>
     );
 }

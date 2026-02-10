@@ -5,21 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c6902eeb-3a60-42e8-a57a-be8cc3d705d6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/components/Main/AlertIsGeneratingMeal.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Main/GeneratedMealCard.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/GeneratedMealsContext.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(main)/_layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(main)/_layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(main)/home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(main)/home.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/_layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Auth/SignUpForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Auth/SignUpForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Main/AlertMealGeneration.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Main/AlertMealGeneration.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Main/GeneratedMeals.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Main/GeneratedMeals.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Main/SavedMeals.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Main/SavedMeals.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Main/generateMeal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Main/generateMeal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/PlanUsageContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lib/PlanUsageContext.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/UserContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lib/UserContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Main/AlertIsGeneratingMeal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Main/AlertIsGeneratingMeal.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,6 +101,9 @@
       <workItem from="1770302487359" duration="3877000" />
       <workItem from="1770470821014" duration="8185000" />
       <workItem from="1770582388176" duration="1516000" />
+      <workItem from="1770652405816" duration="1266000" />
+      <workItem from="1770738985235" duration="1000" />
+      <workItem from="1770755475904" duration="3768000" />
     </task>
     <servers />
   </component>

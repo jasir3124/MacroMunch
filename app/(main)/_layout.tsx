@@ -24,7 +24,6 @@ export default function MainLayout() {
     // generate meal modal
     const [isModalVisible, setIsModalVisible] = useState(false);
 
-
     // alert that meal generation limit reached
     const [ShowGenerationMealAlert, setShowGenerationMealAlert] = useState(false);
     useEffect(() => {
@@ -38,10 +37,10 @@ export default function MainLayout() {
     // alert that meal is generating
     const [ShowGeneratingMealAlert, setShowGeneratingMealAlert] = useState(false);
     useEffect(() => {
-        console.log("ran useEffect")
+        console.log("generating? modal open?")
         console.log(generatingMeal, isModalVisible)
         setShowGeneratingMealAlert(generatingMeal && !isModalVisible)
-    }, [generatingMeal || isModalVisible]);
+    }, [generatingMeal, isModalVisible]);
 
     useEffect(() => {
         if (Platform.OS === 'android') {
@@ -57,52 +56,52 @@ export default function MainLayout() {
                 backgroundColor="#ffffff"
             />
             <View style={{flex: 1, backgroundColor: "#ffffff"}}>
-                    <Tabs
-                        screenOptions={{
-                            headerShown: false,
-                            tabBarActiveTintColor: "#93c572",
-                            tabBarInactiveTintColor: "#6b7280",
-                            tabBarStyle: {
-                                backgroundColor: "#fff",
-                                borderTopWidth: 0,
-                                elevation: 0,
-                                shadowColor: "transparent",
-                                height: 60 + insets.bottom,
-                                paddingBottom: insets.bottom + 8,
-                                paddingTop: 8,
+                <Tabs
+                    screenOptions={{
+                        headerShown: false,
+                        tabBarActiveTintColor: "#93c572",
+                        tabBarInactiveTintColor: "#6b7280",
+                        tabBarStyle: {
+                            backgroundColor: "#fff",
+                            borderTopWidth: 0,
+                            elevation: 0,
+                            shadowColor: "transparent",
+                            height: 60 + insets.bottom,
+                            paddingBottom: insets.bottom + 8,
+                            paddingTop: 8,
+                        },
+                        tabBarLabelStyle: {
+                            fontSize: 12,
+                            fontWeight: "600",
+                        },
+                    }}
+                >
+                    <Tabs.Screen
+                        name="home"
+                        options={{
+                            title: "Home",
+                            tabBarItemStyle: {
+                                marginRight: 30,
                             },
-                            tabBarLabelStyle: {
-                                fontSize: 12,
-                                fontWeight: "600",
-                            },
+                            tabBarIcon: ({color, size}) => (
+                                <Ionicons name="home" color={color} size={size}/>
+                            ),
                         }}
-                    >
-                        <Tabs.Screen
-                            name="home"
-                            options={{
-                                title: "Home",
-                                tabBarItemStyle: {
-                                    marginRight: 30,
-                                },
-                                tabBarIcon: ({color, size}) => (
-                                    <Ionicons name="home" color={color} size={size}/>
-                                ),
-                            }}
-                        />
+                    />
 
-                        <Tabs.Screen
-                            name="profile"
-                            options={{
-                                tabBarItemStyle: {
-                                    marginLeft: 30,
-                                },
-                                title: "Profile",
-                                tabBarIcon: ({color, size}) => (
-                                    <Ionicons name="person" color={color} size={size}/>
-                                ),
-                            }}
-                        />
-                    </Tabs>
+                    <Tabs.Screen
+                        name="profile"
+                        options={{
+                            tabBarItemStyle: {
+                                marginLeft: 30,
+                            },
+                            title: "Profile",
+                            tabBarIcon: ({color, size}) => (
+                                <Ionicons name="person" color={color} size={size}/>
+                            ),
+                        }}
+                    />
+                </Tabs>
             </View>
 
             <TouchableOpacity
@@ -180,7 +179,5 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 20,
         padding: 20,
     },
-    tabBarShadow: {
-
-    }
+    tabBarShadow: {}
 });
