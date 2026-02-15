@@ -1,12 +1,15 @@
 import { View, Text, Pressable } from "react-native";
 import React from "react";
 
+import GeneratedMealIcon from "@/components/Main/GeneratedMealIcon";
+
 export default function GeneratedMealCard({ recipeData, onPress }) {
     return (
         <Pressable
             onPress={onPress}
             className="bg-white shadow-md rounded-xl p-4 mb-6"
         >
+            <GeneratedMealIcon />
             {/* Title */}
             <Text 
                 className="text-xl font-semibold text-limeSoft mb-2"

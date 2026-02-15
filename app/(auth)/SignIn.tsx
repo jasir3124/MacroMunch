@@ -21,7 +21,7 @@ const {height} = Dimensions.get("window");
 
 export default function SingIn() {
     return (
-        <SafeAreaView className="flex-1 bg-greenSoft" edges={["left", "right"]}>
+        <SafeAreaView className="flex-1 bg-greenSoft" edges={["left", "right", "bottom"]}>
             <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
                 style={{flex: 1}}
@@ -66,10 +66,10 @@ export default function SingIn() {
                         </View>
                     </View>
 
-                    <View className="flex-1 px-6 pt-7 justify-around items-center">
+                    <View className="flex-1 px-6 pt-7 justify-between items-center">
                         <SignInForm/>
 
-                        <TouchableOpacity className={"mb-10"} onPress={() => router.push("/(auth)/SignUp")}>
+                        <TouchableOpacity className={""} onPress={() => router.push("/(auth)/SignUp")}>
                             <Text className="text-white">
                                 Dont have an account? <Text className="text-yellowAccent">Sign Up</Text>
                             </Text>

@@ -1,3 +1,5 @@
+// noinspection D
+
 // lib/DeepLinkHandler.ts
 import { useEffect } from "react";
 import { Linking } from "react-native";

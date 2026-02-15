@@ -5,9 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c6902eeb-3a60-42e8-a57a-be8cc3d705d6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/components/Main/GeneratedMealIcon.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(main)/_layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(main)/_layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Main/AlertIsGeneratingMeal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Main/AlertIsGeneratingMeal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(auth)/SignIn.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(auth)/SignIn.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Auth/SignInForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Auth/SignInForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Auth/SignUpForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Auth/SignUpForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Main/GeneratedMealCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Main/GeneratedMealCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/DeepLinkHandler.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/lib/DeepLinkHandler.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +110,10 @@
       <workItem from="1770582388176" duration="1516000" />
       <workItem from="1770652405816" duration="1266000" />
       <workItem from="1770738985235" duration="1000" />
-      <workItem from="1770755475904" duration="3768000" />
+      <workItem from="1770755475904" duration="3960000" />
+      <workItem from="1771063714114" duration="6946000" />
+      <workItem from="1771101692506" duration="1489000" />
+      <workItem from="1771168658954" duration="6375000" />
     </task>
     <servers />
   </component>

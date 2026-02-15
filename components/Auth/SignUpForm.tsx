@@ -3,9 +3,12 @@
 import React, {useState} from "react";
 import {View, Text, TextInput, TouchableOpacity, Modal, ActivityIndicator} from "react-native";
 import {useForm, Controller} from "react-hook-form";
+import { getCalendars } from 'expo-localization';
+
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {supabase} from "@/lib/supabase";
+
 
 import Entypo from '@expo/vector-icons/Entypo';
 import {Ionicons} from "@expo/vector-icons";
@@ -19,6 +22,7 @@ const signUpSchema = z
             .min(6, "Password must be at least 6 characters")
             .max(30, "Password must be at most 30 characters"),
         confirmPassword: z.string(),
+        timezone: z.string(),
     })
     .refine((data) => data.password === data.confirmPassword, {
         message: "Passwords do not match",
@@ -28,8 +32,14 @@ const signUpSchema = z
 type SignUpFormData = z.infer<typeof signUpSchema>;
 
 export default function SignUpForm() {
+    const calendars = getCalendars();
+    const timezone = calendars[0].timeZone;
+
     const {control, handleSubmit, formState: {errors, isSubmitting}} = useForm<SignUpFormData>({
         resolver: zodResolver(signUpSchema),
+        defaultValues: {
+            timezone
+        }
     });
 
     const [showPassword, setShowPassword] = useState(false);
@@ -68,7 +78,12 @@ export default function SignUpForm() {
             const {data: userData, error} = await supabase.auth.signUp({
                 email: data.email,
                 password: data.password,
-                options: {emailRedirectTo: "macromunch://layout"},
+                options: {
+                    emailRedirectTo: "macromunch://layout",
+                    data: {
+                        timezone: data.timezone
+                    }
+                },
             });
 
             if (error) {
